@@ -11,9 +11,9 @@ namespace Alura.CoisasAFazer.Services.Handlers
         IRepositorioTarefas _repo;
         ILogger<CadastraTarefaHandler> _logger;
 
-        public CadastraTarefaHandler()
+        public CadastraTarefaHandler(IRepositorioTarefas repo)
         {
-            _repo = new RepositorioTarefa();
+            _repo = repo;
             _logger = new LoggerFactory().CreateLogger<CadastraTarefaHandler>();
         }
 
