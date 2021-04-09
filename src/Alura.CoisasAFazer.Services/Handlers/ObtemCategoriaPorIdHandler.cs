@@ -8,9 +8,9 @@ namespace Alura.CoisasAFazer.Services.Handlers
     {
         IRepositorioTarefas _repo;
 
-        public ObtemCategoriaPorIdHandler()
+        public ObtemCategoriaPorIdHandler(IRepositorioTarefas reposito)
         {
-            _repo = new RepositorioTarefa();
+            _repo = reposito;
         }
         public Categoria Execute(ObtemCategoriaPorId comando)
         {
