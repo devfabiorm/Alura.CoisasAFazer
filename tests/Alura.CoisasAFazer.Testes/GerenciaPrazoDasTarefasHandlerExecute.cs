@@ -3,6 +3,7 @@ using Alura.CoisasAFazer.Core.Models;
 using Alura.CoisasAFazer.Infrastructure;
 using Alura.CoisasAFazer.Services.Handlers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace Alura.CoisasAFazer.Testes
             };
 
             var options = new DbContextOptionsBuilder<DbTarefasContext>()
-               .UseInMemoryDatabase("DbTarefasContext")
+               .UseInMemoryDatabase("DbTarefasContext", new InMemoryDatabaseRoot())
                .Options;
             var contexto = new DbTarefasContext(options);
             var repo = new RepositorioTarefa(contexto);
@@ -58,7 +59,7 @@ namespace Alura.CoisasAFazer.Testes
         }
 
         [Fact]
-        public void QunadoInvocadoDeveChamarAtualizarTarefasNaQtdeVezesDoTotalDeTarefasAtrasadas()
+        public void QuandoInvocadoDeveChamarAtualizarTarefasNaQtdeVezesDoTotalDeTarefasAtrasadas()
         {
             var categ = new Categoria("Dummy");
 

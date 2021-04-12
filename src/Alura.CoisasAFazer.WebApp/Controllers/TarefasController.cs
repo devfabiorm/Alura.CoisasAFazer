@@ -3,6 +3,7 @@ using Alura.CoisasAFazer.WebApp.Models;
 using Alura.CoisasAFazer.Core.Commands;
 using Alura.CoisasAFazer.Services.Handlers;
 using Alura.CoisasAFazer.Infrastructure;
+using Microsoft.Extensions.Logging;
 
 namespace Alura.CoisasAFazer.WebApp.Controllers
 {
@@ -10,11 +11,13 @@ namespace Alura.CoisasAFazer.WebApp.Controllers
     [ApiController]
     public class TarefasController : ControllerBase
     {
-        private readonly IRepositorioTarefas _repo;
+        IRepositorioTarefas _repo;
+        ILogger<CadastraTarefaHandler> _logger;
 
-        public TarefasController(IRepositorioTarefas repositorio)
+        public TarefasController(IRepositorioTarefas repo, ILogger<CadastraTarefaHandler> logger)
         {
-            _repo = repositorio;
+            _repo = repo;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -28,9 +31,10 @@ namespace Alura.CoisasAFazer.WebApp.Controllers
             }
 
             var comando = new CadastraTarefa(model.Titulo, categoria, model.Prazo);
-            var handler = new CadastraTarefaHandler(_repo);
-            handler.Execute(comando);
-            return Ok();
+            var handler = new CadastraTarefaHandler(_repo, _logger);
+            var resultado = handler.Execute(comando);
+            if(resultado.IsSuccess) return Ok();
+            return StatusCode(500);
         }
     }
 }

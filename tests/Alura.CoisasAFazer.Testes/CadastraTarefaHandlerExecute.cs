@@ -8,6 +8,7 @@ using System.Linq;
 using Xunit;
 using Moq;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Alura.CoisasAFazer.Testes
 {
@@ -19,7 +20,7 @@ namespace Alura.CoisasAFazer.Testes
             //Arrange
             var comando = new CadastraTarefa("Estudar xUnit", new Categoria("Estudo"), new DateTime(2021, 12, 31));
             var options = new DbContextOptionsBuilder<DbTarefasContext>()
-                .UseInMemoryDatabase("DbTarefasContext")
+                .UseInMemoryDatabase("DbTarefasContext", new InMemoryDatabaseRoot())
                 .Options;
             var mock = new Mock<ILogger<CadastraTarefaHandler>>();
             var contexto = new DbTarefasContext(options);
