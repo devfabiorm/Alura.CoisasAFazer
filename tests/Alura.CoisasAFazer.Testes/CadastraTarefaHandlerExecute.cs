@@ -40,7 +40,8 @@ namespace Alura.CoisasAFazer.Testes
         public void DadaTarefaComInfoValidasDeveLogar()
         {
             //Arrange
-            var comando = new CadastraTarefa("Estudar xUnit", new Categoria("Estudo"), new DateTime(2021, 12, 31));
+            var mensagemEsperada = "Aprofundando o conhecimento em testes usando Moq";
+            var comando = new CadastraTarefa(mensagemEsperada, new Categoria("Estudo"), new DateTime(2021, 12, 31));
             
             var mockLogger = new Mock<ILogger<CadastraTarefaHandler>>();
 
@@ -71,7 +72,7 @@ namespace Alura.CoisasAFazer.Testes
 
             //Assert
             Assert.Equal(LogLevel.Debug, levelCapturado);
-            Assert.Contains("Estudar xUnit", mensagemCapturada);
+            Assert.Contains(mensagemEsperada, mensagemCapturada);
         }
 
         [Fact]
